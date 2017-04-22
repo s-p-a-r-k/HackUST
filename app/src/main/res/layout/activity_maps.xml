@@ -93,7 +93,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="18dp"
-        android:max="23"
+        android:max="1439"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         app:markerColor="@color/colorPrimary"
         app:markerTextColor="#ffffff"/>
 
