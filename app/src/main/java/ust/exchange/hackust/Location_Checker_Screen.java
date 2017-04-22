@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.Console;
@@ -49,8 +50,9 @@ public class Location_Checker_Screen extends AppCompatActivity {
     }
 
     public void tempMethod(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, MapsActivity.class);
+        //startActivity(intent);
+        DatabaseTester.testing();
     }
 
     public boolean isLocationEnabled(Context context) {
