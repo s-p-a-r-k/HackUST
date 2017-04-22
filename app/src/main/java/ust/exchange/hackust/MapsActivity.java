@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.bq.markerseekbar.MarkerSeekBar;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -97,6 +98,20 @@ public class MapsActivity extends FragmentActivity
 
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
+
+        MarkerSeekBar bar = (MarkerSeekBar) findViewById(R.id.markerSeekBar);
+        assert bar != null;
+        bar.setProgressAdapter(new MarkerSeekBar.ProgressAdapter() {
+            @Override
+            public String toText(int progress) {
+                return String.format(" %d : 00 ", progress);
+            }
+
+            @Override
+            public String onMeasureLongestText(int seekBarMax) {
+                return toText(seekBarMax);
+            }
+        });
 
         // Build the Play services client for use by the Fused Location Provider and the Places API.
         // Use the addApi() method to request the Google Places API and the Fused Location Provider.
