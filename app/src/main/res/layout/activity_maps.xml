@@ -1,11 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="@android:drawable/progress_horizontal">
+                android:background="@android:color/white">
+
+    <Button
+        android:id="@+id/sunButton"
+        android:background="#FAFAFA"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/markerSeekBar"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="5dp"
+        android:text="Sun"
+        android:textSize="11sp"/>
+
+    <Button
+        android:id="@+id/monButton"
+        android:background="#FAFAFA"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/markerSeekBar"
+        android:layout_marginBottom="18dp"
+        android:layout_toEndOf="@+id/sunButton"
+        android:text="Mon"
+        android:textSize="11sp"/>
+
+    <Button
+        android:id="@+id/tueButton"
+        android:background="#FAFAFA"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/markerSeekBar"
+        android:layout_marginBottom="18dp"
+        android:layout_toEndOf="@+id/monButton"
+        android:text="Tue"
+        android:textSize="11sp"/>
+
+    <Button
+        android:id="@+id/wedButton"
+        android:background="#FAFAFA"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/markerSeekBar"
+        android:layout_marginBottom="18dp"
+        android:layout_toEndOf="@+id/tueButton"
+        android:text="Wed"
+        android:textSize="11sp"/>
+
+    <Button
+        android:id="@+id/thuButton"
+        android:background="#FAFAFA"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/markerSeekBar"
+        android:layout_marginBottom="18dp"
+        android:layout_toEndOf="@+id/wedButton"
+        android:text="Thu"
+        android:textSize="11sp"/>
+
+    <Button
+        android:id="@+id/friButton"
+        android:background="#FAFAFA"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/markerSeekBar"
+        android:layout_marginBottom="18dp"
+        android:layout_toEndOf="@+id/thuButton"
+        android:text="Fri"
+        android:textSize="11sp"/>
+
+    <Button
+        android:id="@+id/satButton"
+        android:background="#FAFAFA"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/markerSeekBar"
+        android:layout_marginBottom="18dp"
+        android:layout_marginRight="5dp"
+        android:layout_toEndOf="@+id/friButton"
+        android:text="Sat"
+        android:textSize="11sp"/>
+
+    <com.bq.markerseekbar.MarkerSeekBar
+        android:id="@+id/markerSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="18dp"
+        android:max="23"
+        app:markerColor="@color/colorPrimary"
+        app:markerTextColor="#ffffff"/>
 
     <fragment
         android:id="@+id/touchableMap"
@@ -13,23 +103,26 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/sunButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="38dp"
-            android:layout_marginTop="12dp"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:layout_marginTop="12dp"
             card_view:cardBackgroundColor="#d7ffffff">
 
             <fragment
                 android:id="@+id/place_autocomplete_fragment"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"/>
+                android:scaleType="fitXY"/>
 
         </android.support.v7.widget.CardView>
 
