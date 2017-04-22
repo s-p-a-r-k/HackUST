@@ -2,4 +2,6 @@
     <string name="app_name">SurgeProtector</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_loading_">Loading_Activity</string>
+    <string name="textbox">Notification</string>
+    <string name="notify">Location Services is not turned On</string>
 </resources>
