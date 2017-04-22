@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringDef;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bq.markerseekbar.MarkerSeekBar;
@@ -101,10 +103,23 @@ public class MapsActivity extends FragmentActivity
 
         MarkerSeekBar bar = (MarkerSeekBar) findViewById(R.id.markerSeekBar);
         assert bar != null;
+
         bar.setProgressAdapter(new MarkerSeekBar.ProgressAdapter() {
             @Override
             public String toText(int progress) {
-                return String.format(" %d : 00 ", progress);
+                int min;
+                int hr;
+                min = progress % 60;
+                hr = progress / 60;
+                String am_pm;
+                if (hr > 12) {
+                    hr = hr - 12;
+                    am_pm = "PM";
+                } else {
+                    am_pm = "AM";
+                }
+
+                return " " + hr + " : " + String.format("%02d", min) + am_pm;
             }
 
             @Override
