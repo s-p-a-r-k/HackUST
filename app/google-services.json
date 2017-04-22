@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1079930567825",
+    "firebase_url": "https://hackust-75a8f.firebaseio.com",
+    "project_id": "hackust-75a8f",
+    "storage_bucket": "hackust-75a8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079930567825:android:ef75ccc4bcfcb0bb",
+        "android_client_info": {
+          "package_name": "ust.exchange.hackust"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079930567825-go784urs6tm9hqisb512lh00kl6hfh3c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMyqgTdpEufEtq0gLK_lf-EQ8UCOj-Gfk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
