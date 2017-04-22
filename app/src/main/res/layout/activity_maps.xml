@@ -96,7 +96,7 @@
         android:max="1439"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
-        app:markerColor="@color/colorPrimary"
+        app:markerColor="@color/cast_intro_overlay_button_background_color"
         app:markerTextColor="#ffffff"/>
 
     <fragment
