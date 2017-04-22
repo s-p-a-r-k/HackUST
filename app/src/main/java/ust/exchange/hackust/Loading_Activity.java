@@ -1,5 +1,7 @@
 package ust.exchange.hackust;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +20,7 @@ public class Loading_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_);
-        new CountDownTimer(5000, 1000) {
+        new CountDownTimer(3000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 startAnim();
@@ -37,5 +39,7 @@ public class Loading_Activity extends AppCompatActivity {
     void endAnim() {
         AVLoadingIndicatorView avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         avi.hide();
+        Intent intent = new Intent(this, Location_Checker_Screen.class);
+        startActivity(intent);
     }
 }
