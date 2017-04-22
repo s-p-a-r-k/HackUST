@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ust.exchange.hackust.Loading_Activity">
-    <include layout="@layout/content_loading_" />
-
+    tools:context="ust.exchange.hackust.Location_Checker_Screen">
+    <include layout="@layout/content_location_checker" />
 
 </android.support.design.widget.CoordinatorLayout>
