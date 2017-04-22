@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +45,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * An activity that displays a map showing the place at the device's current location.
  */
-public class MapsActivity extends AppCompatActivity
+public class MapsActivity extends FragmentActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -52,8 +53,10 @@ public class MapsActivity extends AppCompatActivity
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
+    private SupportMapFragment mapFragment;
 
     private Circle circle;
+    private Marker prevMarker;
 
     // The entry point to Google Play services, used by the Places API and Fused Location Provider.
     private GoogleApiClient mGoogleApiClient;
@@ -72,6 +75,8 @@ public class MapsActivity extends AppCompatActivity
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
+
+    public boolean isMapTouched = false;
 /*
     // Used for selecting the current place.
     private final int mMaxEntries = 5;
@@ -105,13 +110,19 @@ public class MapsActivity extends AppCompatActivity
                 .build();
         mGoogleApiClient.connect();
 
+        mapFragment = (TouchableMapFragment) getSupportFragmentManager().findFragmentById(R.id.touchableMap);
+        mapFragment.getMapAsync(this);
+
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                mMap.addMarker(new MarkerOptions().position(place.getLatLng()));
+                if (prevMarker != null) {
+                    prevMarker.remove();
+                }
+                prevMarker = mMap.addMarker(new MarkerOptions().position(place.getLatLng()));
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
             }
 
@@ -142,7 +153,7 @@ public class MapsActivity extends AppCompatActivity
     public void onConnected(Bundle connectionHint) {
         // Build the map.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.touchableMap);
         mapFragment.getMapAsync(this);
     }
 
@@ -228,6 +239,38 @@ public class MapsActivity extends AppCompatActivity
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+
+        new MapStateListener(mMap, (TouchableMapFragment) mapFragment, this) {
+
+            @Override
+            public void onMapTouched() {
+                isMapTouched = true;
+            }
+
+            @Override
+            public void onMapReleased() {
+
+            }
+
+            @Override
+            public void onMapUnsettled() {
+
+            }
+
+            @Override
+            public void onMapSettled() {
+
+            }
+        };
+
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+
+            @Override
+            public boolean onMyLocationButtonClick() {
+                isMapTouched = false;
+                return false;
+            }
+        });
 
         if (mLastKnownLocation != null) {
             circle = mMap.addCircle(new CircleOptions()
