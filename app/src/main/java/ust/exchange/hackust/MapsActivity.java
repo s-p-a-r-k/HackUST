@@ -105,11 +105,12 @@ public class MapsActivity extends FragmentActivity
     private static final String KEY_LOCATION = "location";
 
     public boolean isMapTouched = false;
+    public ArrayList<DatabaseTester.myObject> dataList = DatabaseTester.testing();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<DatabaseTester.myObject> dataList = DatabaseTester.testing();
+//        dataList = DatabaseTester.testing();
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -349,15 +350,14 @@ public class MapsActivity extends FragmentActivity
             }
         });
 
-        if (mLastKnownLocation != null) {
+        for (DatabaseTester.myObject testing: dataList) {
             circle = mMap.addCircle(new CircleOptions()
-                    .center(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()))
-                    .radius(50)
-                    .strokeWidth(10)
-                    .strokeColor(Color.RED)
-                    .fillColor(Color.RED));
+                .center(new LatLng(testing.getBegintrip_lat(), testing.getBegintrip_long()))
+                .radius(50)
+                .strokeWidth(10)
+                .strokeColor(Color.argb((int) testing.getSurge() * 25, 203, 45, 45))
+                .fillColor(Color.argb((int) testing.getSurge() * 25, 203, 45, 45)));
         }
-
     }
 
     /**
