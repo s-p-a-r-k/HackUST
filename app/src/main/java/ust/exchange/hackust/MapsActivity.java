@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
@@ -21,9 +22,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bq.markerseekbar.MarkerSeekBar;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.BooleanResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -48,6 +51,19 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * An activity that displays a map showing the place at the device's current location.
@@ -81,6 +97,7 @@ public class MapsActivity extends FragmentActivity
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location mLastKnownLocation;
+    private String destination;
 
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
@@ -147,7 +164,7 @@ public class MapsActivity extends FragmentActivity
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
+        autocompleteFragment.setHint("To...");
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -156,6 +173,9 @@ public class MapsActivity extends FragmentActivity
                 }
                 prevMarker = mMap.addMarker(new MarkerOptions().position(place.getLatLng()));
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
+
+                destination = place.getLatLng().latitude + "," + place.getLatLng().longitude;
+                new GetDirection().execute();
             }
 
             @Override
@@ -440,5 +460,119 @@ public class MapsActivity extends FragmentActivity
         }
 
         mLastKnownLocation = location;
+    }
+
+
+
+
+
+
+    public class GetDirection extends AsyncTask<String, String, String> {
+        public String carTime;
+        public String publicTime;
+        public int carNum;
+        public int publicNum;
+
+        @Override
+        protected String doInBackground(String ... params) {
+            String result = "";
+            URL carUrl = null;
+            URL transitUrl = null;
+            try {
+                carUrl = new URL("http://maps.googleapis.com/maps/api/directions/json?origin=" + mLastKnownLocation.getLatitude() + "," + mLastKnownLocation.getLongitude() + "&destination=" + destination + "&sensor=false");
+                transitUrl = new URL("http://maps.googleapis.com/maps/api/directions/json?origin=" + mLastKnownLocation.getLatitude() + "," + mLastKnownLocation.getLongitude() + "&destination=" + destination + "&mode=transit&sensor=false");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            if (estimateTime(carUrl, result, true) == "true" && estimateTime(transitUrl, result, false) == "true") {
+                return "true";
+            } else {
+                return "false";
+            }
+        }
+
+        private String estimateTime(URL url, String result, Boolean isCar) {
+            HttpURLConnection urlConnection = null;
+            try {
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.connect();
+
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                result = convertInputStreamToString(in);
+
+                if (!(result == null) && !result.equals("")) {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (!jsonObject.getString("status").equals("ZERO_RESULTS")) {
+                        // routesArray contains ALL routes
+                        JSONArray routesArray = null;
+                        try {
+                            routesArray = jsonObject.getJSONArray("routes");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        // Grab the first route
+                        JSONObject route = null;
+                        route = routesArray.getJSONObject(0);
+
+                        JSONArray duration = null;
+                        duration = route.getJSONArray("legs");
+
+                        JSONObject text = null;
+                        text = duration.getJSONObject(0);
+
+                        if (isCar) {
+                            carTime = text.getJSONObject("duration").getString("text");
+                            carNum = text.getJSONObject("duration").getInt("value");
+                            System.out.println(carTime);
+                            System.out.println(carNum);
+                        } else {
+                            publicTime = text.getJSONObject("duration").getString("text");
+                            publicNum = text.getJSONObject("duration").getInt("value");
+                            System.out.println(publicTime);
+                            System.out.println(publicNum);
+                        }
+                    }
+                    return "true";
+                } else {
+                    return "false";
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+            }
+            return null;
+        }
+
+        private String convertInputStreamToString(InputStream inputStream) throws IOException {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line = "";
+            String result = "";
+            while ((line = bufferedReader.readLine()) != null)
+                result += line;
+
+            inputStream.close();
+            return result;
+
+        }
+        protected void onPostExecute(String file_url) {
+            if (publicNum != 0 && carNum != 0) {
+                if (publicNum <= carNum + 350 || publicNum <= carNum * 1.2) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Public transit is only " + (publicNum - carNum) / 60 + " min slower. Suggest to use public transit.", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        }
     }
 }
