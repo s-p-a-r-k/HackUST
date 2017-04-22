@@ -7,9 +7,31 @@
     android:background="@drawable/locationcheck"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ust.exchange.hackust.Location_Checker_Screen"
-    tools:showIn="@layout/activity_loading_"
+    tools:showIn="@layout/activity_location__checker__screen"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
+    <TextView
+        android:id="@+id/notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        app:layout_anchor="@+id/include"
+        android:textColor="@color/white"
+        app:layout_anchorGravity="bottom|center_horizontal"
+        tools:text="demo"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="72dp" />
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        style="@style/AVLoadingIndicatorView"
+        android:visibility="visible"
+        android:layout_marginTop="350dp"
+        app:indicatorName="BallPulseIndicator"
+    />
 
 </android.widget.RelativeLayout>
 

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ust.exchange.hackust.Location_Checker_Screen">
-    <include layout="@layout/content_location_checker"
-        android:id="@+id/include" />
+    <include layout="@layout/content_location_checker" />
 
     <Button
         android:id="@+id/tempbutton"
@@ -14,5 +13,6 @@
         android:layout_height="wrap_content"
         android:text="Go To Map"
         android:onClick="tempMethod"/>
+
 
 </android.support.design.widget.CoordinatorLayout>
