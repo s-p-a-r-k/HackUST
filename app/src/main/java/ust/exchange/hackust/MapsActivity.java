@@ -1,5 +1,13 @@
 package ust.exchange.hackust;
 
+// get the list of circles
+//change the circles' radius if necessary
+// circle.remove() to remove circle
+// bar.getProgress() to get the output of the bar
+// suggest where to go
+// https://developers.google.com/maps/documentation/android-api/current-place-tutorial      has tutorial for suggesting nearby places
+// https://github.com/googlemaps/android-maps-utils/tree/master/demo/src/com/google/maps/android/utils/demo         heatmap demo if you decide to change circles to heatmap
+// https://github.com/bq/MarkerSeekBar      if you need to see methods for bar
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
