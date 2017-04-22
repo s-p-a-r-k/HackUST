@@ -30,20 +30,18 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDJNbs-e8EvWGzCblfncT67sfrU5TuClqY" />
-
         <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
+            android:name=".Loading_Activity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Loading_Activity"
-            android:label="@string/title_activity_loading_"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps">
+        </activity>
     </application>
 
 </manifest>
