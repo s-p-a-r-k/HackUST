@@ -14,16 +14,19 @@ import android.view.Window;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.wang.avi.indicators.BallTrianglePathIndicator;
 
-public class Loading_Activity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class Loading_Activity extends AppCompatActivity {
+    static ArrayList<DatabaseTester.myObject> dataList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_);
-        new CountDownTimer(3000, 1000) {
+        new CountDownTimer(4000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 startAnim();
+                dataList = DatabaseTester.testing();
             }
 
             public void onFinish() {
@@ -31,6 +34,7 @@ public class Loading_Activity extends AppCompatActivity {
             }
         }.start();
     }
+
     void startAnim() {
         AVLoadingIndicatorView avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         avi.show();
@@ -41,5 +45,8 @@ public class Loading_Activity extends AppCompatActivity {
         avi.hide();
         Intent intent = new Intent(this, Location_Checker_Screen.class);
         startActivity(intent);
+    }
+    static ArrayList<DatabaseTester.myObject> getDataList() {
+        return dataList;
     }
 }
