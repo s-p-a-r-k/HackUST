@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -46,14 +48,18 @@ public class Location_Checker_Screen extends AppCompatActivity {
                 }
             });
             alert.create().show();
+            TextView text = (TextView) findViewById(R.id.editText);
+            text.setText("Click map if Location Service Turned On");
+            RelativeLayout layout = (RelativeLayout) findViewById(R.id.layout);
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(Location_Checker_Screen.this, MapsActivity.class));
+                }
+            });
         }
     }
 
-    public void tempMethod(View view) {
-        //Intent intent = new Intent(this, MapsActivity.class);
-        //startActivity(intent);
-        DatabaseTester.testing();
-    }
 
     public boolean isLocationEnabled(Context context) {
         tester = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);

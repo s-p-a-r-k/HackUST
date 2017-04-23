@@ -17,7 +17,8 @@
         android:layout_marginBottom="18dp"
         android:layout_marginLeft="5dp"
         android:text="Sun"
-        android:textSize="11sp"/>
+        android:textSize="11sp"
+        android:onClick="buttonNum0"/>
 
     <Button
         android:id="@+id/monButton"
@@ -28,7 +29,8 @@
         android:layout_marginBottom="18dp"
         android:layout_toEndOf="@+id/sunButton"
         android:text="Mon"
-        android:textSize="11sp"/>
+        android:textSize="11sp"
+        android:onClick="buttonNum1"/>
 
     <Button
         android:id="@+id/tueButton"
@@ -39,7 +41,8 @@
         android:layout_marginBottom="18dp"
         android:layout_toEndOf="@+id/monButton"
         android:text="Tue"
-        android:textSize="11sp"/>
+        android:textSize="11sp"
+        android:onClick="buttonNum2"/>
 
     <Button
         android:id="@+id/wedButton"
@@ -50,7 +53,8 @@
         android:layout_marginBottom="18dp"
         android:layout_toEndOf="@+id/tueButton"
         android:text="Wed"
-        android:textSize="11sp"/>
+        android:textSize="11sp"
+        android:onClick="buttonNum3"/>
 
     <Button
         android:id="@+id/thuButton"
@@ -61,7 +65,8 @@
         android:layout_marginBottom="18dp"
         android:layout_toEndOf="@+id/wedButton"
         android:text="Thu"
-        android:textSize="11sp"/>
+        android:textSize="11sp"
+        android:onClick="buttonNum4"/>
 
     <Button
         android:id="@+id/friButton"
@@ -72,7 +77,8 @@
         android:layout_marginBottom="18dp"
         android:layout_toEndOf="@+id/thuButton"
         android:text="Fri"
-        android:textSize="11sp"/>
+        android:textSize="11sp"
+        android:onClick="buttonNum5"/>
 
     <Button
         android:id="@+id/satButton"
@@ -84,7 +90,8 @@
         android:layout_marginRight="5dp"
         android:layout_toEndOf="@+id/friButton"
         android:text="Sat"
-        android:textSize="11sp"/>
+        android:textSize="11sp"
+        android:onClick="buttonNum6"/>
 
     <com.bq.markerseekbar.MarkerSeekBar
         android:id="@+id/markerSeekBar"
@@ -129,5 +136,16 @@
         </android.support.v7.widget.CardView>
 
     </fragment>
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/friButton"
+        android:layout_alignEnd="@+id/markerSeekBar"
+        android:layout_marginBottom="13dp"
+        android:text="Confirm"
+        android:backgroundTint="@color/wallet_holo_blue_light"
+        android:onClick="calculate"/>
 
 </RelativeLayout>

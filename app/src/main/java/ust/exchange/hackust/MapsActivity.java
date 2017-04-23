@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -82,6 +83,7 @@ public class MapsActivity extends FragmentActivity
 
     private Circle circle;
     private Marker prevMarker;
+    private long dayofweek;
 
     // The entry point to Google Play services, used by the Places API and Fused Location Provider.
     private GoogleApiClient mGoogleApiClient;
@@ -105,12 +107,13 @@ public class MapsActivity extends FragmentActivity
     private static final String KEY_LOCATION = "location";
 
     public boolean isMapTouched = false;
-    public ArrayList<DatabaseTester.myObject> dataList = DatabaseTester.testing();
-
+    public ArrayList<DatabaseTester.myObject> list;
+    private MarkerSeekBar bar;
+    public ArrayList<Circle> circleList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        dataList = DatabaseTester.testing();
+        circleList = new ArrayList<Circle>();
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -119,10 +122,10 @@ public class MapsActivity extends FragmentActivity
 
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
+        Button monday = (Button) findViewById(R.id.monButton);
 
-        MarkerSeekBar bar = (MarkerSeekBar) findViewById(R.id.markerSeekBar);
+        bar = (MarkerSeekBar) findViewById(R.id.markerSeekBar);
         assert bar != null;
-
         bar.setProgressAdapter(new MarkerSeekBar.ProgressAdapter() {
             @Override
             public String toText(int progress) {
@@ -166,7 +169,7 @@ public class MapsActivity extends FragmentActivity
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-        autocompleteFragment.setHint("To...");
+        autocompleteFragment.setHint("From...");
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -350,14 +353,14 @@ public class MapsActivity extends FragmentActivity
             }
         });
 
-        for (DatabaseTester.myObject testing: dataList) {
-            circle = mMap.addCircle(new CircleOptions()
-                .center(new LatLng(testing.getBegintrip_lat(), testing.getBegintrip_long()))
-                .radius(50)
-                .strokeWidth(10)
-                .strokeColor(Color.argb((int) testing.getSurge() * 25, 203, 45, 45))
-                .fillColor(Color.argb((int) testing.getSurge() * 25, 203, 45, 45)));
-        }
+//        for (DatabaseTester.myObject testing: list) {
+//            circle = mMap.addCircle(new CircleOptions()
+//                .center(new LatLng(testing.getBegintrip_lat(), testing.getBegintrip_long()))
+//                .radius(50)
+//                .strokeWidth(10)
+//                .strokeColor(Color.argb((int) testing.getSurge() * 25, 203, 45, 45))
+//                .fillColor(Color.argb((int) testing.getSurge() * 25, 203, 45, 45)));
+//        }
     }
 
     /**
@@ -463,7 +466,44 @@ public class MapsActivity extends FragmentActivity
         mLastKnownLocation = location;
     }
 
+    public void calculate(View view) {
+            Processor proc = new Processor(dayofweek, bar.getProgress());
+            list = proc.sort();
+            if (circleList.size() != 0) {
+                mMap.clear();
+            }
+            for (DatabaseTester.myObject testing: list) {
+                circle = mMap.addCircle(new CircleOptions()
+                .center(new LatLng(testing.getBegintrip_lat(), testing.getBegintrip_long()))
+                .radius(50)
+                .strokeWidth(10)
+                .strokeColor(Color.argb((int) testing.getSurge() * 25, 203, 45, 45))
+                .fillColor(Color.argb((int) testing.getSurge() * 25, 203, 45, 45)));
+                circleList.add(circle);
+            }
+    }
 
+    public void buttonNum0(View view) {
+        dayofweek = 0;
+    }
+    public void buttonNum1(View view) {
+        dayofweek = 1;
+    }
+    public void buttonNum2(View view) {
+        dayofweek = 2;
+    }
+    public void buttonNum3(View view) {
+        dayofweek = 3;
+    }
+    public void buttonNum4(View view) {
+        dayofweek = 4;
+    }
+    public void buttonNum5(View view) {
+        dayofweek = 5;
+    }
+    public void buttonNum6(View view) {
+        dayofweek = 6;
+    }
 
 
 

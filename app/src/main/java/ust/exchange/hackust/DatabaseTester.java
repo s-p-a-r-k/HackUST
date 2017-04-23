@@ -65,7 +65,6 @@ public class DatabaseTester {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             for(DataSnapshot postSnap: dataSnapshot.getChildren()) {
-                //Log.i("Record",postSnap.toString());
                 myObject newRecord = new myObject();
                 newRecord.setSurge((Double.parseDouble(postSnap.child("surge_multiplier").getValue().toString())));
                 newRecord.setBegintrip_lat((double)postSnap.child("begintrip_lat").getValue());
@@ -85,7 +84,7 @@ public class DatabaseTester {
     }
 
     public static Query createSurgeQuery(DatabaseReference ref) {
-        Query surge_query = ref.orderByChild("surge_multiplier").startAt(2.0);
+        Query surge_query = ref.orderByChild("surge_multiplier").startAt(1.6);
         return surge_query;
     }
 }
