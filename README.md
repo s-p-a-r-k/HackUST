@@ -3,8 +3,8 @@
 HackUST 2017 Transportation Category
 Android Application
 
-Created using Android Studio
-Firebase Database backend for Uber Big Data 
+Android Studio </br>
+Firebase Database </br>
 
 Solving Traffic Congestion in Hong Kong
 
@@ -26,10 +26,10 @@ Carpooling, but this is a sensitive topic since carpooling legalality in Hong Ko
 Importing of more data to get more accurate surge regions, currently is just used fixed data
 
 
-#Created By
-John Lin - Georgia Tech
-Suyoung Park - Georgia Tech
-Paulina Babiak - Columbia
-Edmund Pan - University of Virginia
-Saejin Jang - Pohang University of Science and Technology
+## Created By
+John Lin - Georgia Tech </br>
+Suyoung Park - Georgia Tech </br>
+Paulina Babiak - Columbia </br>
+Edmund Pan - University of Virginia </br>
+Saejin Jang - Pohang University of Science and Technology </br>
 
